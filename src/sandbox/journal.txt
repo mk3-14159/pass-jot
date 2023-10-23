@@ -1,0 +1,24 @@
+Sample Journal
+
+Monday, 23 October 2023
+  │ 
+  ├── 14:40:59 
+  │   └── Just figured out this time stamp functionality, pretty cool. Will play 
+  │       with it more.
+  │
+  ├── 14:42:48 
+  │   └── I figured this style of journaling sorta looks like live journal hello
+  │       This has to be capped at fourty words, I mean it would sorta look like
+  │       this I guess...
+  │
+  ├── 14:45:03
+  │   └── In effect, what i'm doing here is documenting my internal thoughts as 
+  │       meta data for me to analyse later...
+  │
+  └── 19:45:03
+      └── Final message of the day, writing this before I sleep... Goodnight!
+  
+Tuesday, 24 October 2023
+  │
+  └── 06:45:02 
+      └── Yay 😊 I get to wake up and journal all over again!
