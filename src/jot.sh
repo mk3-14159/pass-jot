@@ -7,21 +7,36 @@
 umask "${JOT_UMASK:-077}"
 set -o pipefail
 
-# GPG variables 
-# Character variables 
+# Timestamp variables 
+TIME=$(date "+%H:%M:%S")
+DATE=$(date +"%A, %d %B %Y")
+
+# Tree Constants 
+JOURNAL_FILE="$HOME/.jot/jot.log"
+BRANCH="  │"
+TIME_STAMP_PAST="  ├──"
+TIME_STAMP_CURRENT="  └──"
+CONTINUE_BRANCH="  │   └──"
+END_BRANCH="      └──"
 
 #
-# BEGIN platform definitions
+# BEGIN platform definable
 #
-JOURNAL_FILE="$HOME/.jot/jot.log"
+
+verify_current_date() {
+    latest_date=$(grep -oE '[A-Za-z]+, [0-9]+ [A-Za-z]+ [0-9]{4}' journal.txt | tail -1)
+}
+
 #
-# END platform definitions
+# END platform definable
 #
+
 
 #
 # BEGIN subcommand functions
 #
 
+# Check Version
 cmd_version() {
 	cat <<-_EOF
     +-----------------------------------+
@@ -34,29 +49,22 @@ cmd_version() {
     |                                   |
     |         http://jotcli.org         |
     +-----------------------------------+
-
 	_EOF
 }
 
-cmd_commit() {
-    local MESSAGE="$1" 
-    local TIMESTAMP="$(date +"%Y-%m-%d %H:%M:%S")"
-    echo "[$TIMESTAMP]" >> "$JOURNAL_FILE"
-    echo "Logged "
+# Create new entry 
+cmd_new_entry() {
+    echo -e "$DATE"
+    echo -e "$BRANCH"
+    echo -e "$TIME_STAMP_CURRENT $TIME"
+    echo -e "$END_BRANCH this is my message"
 }
-
-
-
 
 #
 # END subcommand functions
 #
 
-PROGRAM="${0##*/}"
-COMMAND="$1"
 
-case "$1" in
-	version|--version) shift;	cmd_version "$@" ;;
-	*)				            cmd_extension_or_show "$@" ;;
-esac
-exit 0
+
+
+

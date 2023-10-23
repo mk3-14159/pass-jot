@@ -1,5 +1,8 @@
 Sample Journal
 
+In bash, how do I compare the today's date to the latest date in the .txt file which is Tuesday, 24 October 2023
+
+```journal.txt
 Monday, 23 October 2023
   │ 
   ├── 14:40:59 
@@ -17,8 +20,71 @@ Monday, 23 October 2023
   │
   └── 19:45:03
       └── Final message of the day, writing this before I sleep... Goodnight!
-  
+
 Tuesday, 24 October 2023
   │
-  └── 06:45:02 
-      └── Yay 😊 I get to wake up and journal all over again!
+  ├── 06:45:02 
+  │   └── Yay 😊 I get to wake up and journal all over again!
+  │
+  └── 06:49:02
+      └── Hello again!
+```
+
+
+Desired output of bash program
+
+```output.txt
+Tuesday, 24 October 2023
+  │
+  ├── 06:45:02 
+  │   └── Yay 😊 I get to wake up and journal all over again!
+  │
+  └── 06:49:02
+      └── Hello again!
+```
+
+If I could name "├── ", "│   └──", "└──" into variables, what should I name them?
+
+
+
+
+Assuming
+
+
+In a bash script, if I make a new entry the previous.txt should become changed.txt
+How can I achieve that?
+
+# Tree Constants 
+BRANCH="  │"
+TIME_STAMP_PAST="  ├──"
+TIME_STAMP_CURRENT="  └──"
+CONTINUE_BRANCH="  │   └──"
+END_BRANCH="      └──"
+
+```previous.txt
+ 
+  └── 06:49:02
+      └── Hello world!
+```
+
+```changed.txt
+  ├── 06:49:02 
+  │   └── Hello world!
+  │
+  └── 06:50:07
+      └── I'm added!
+```
+
+
+
+
+
+
+
+# Create time stamp
+time_stamp = "  ├── $TIMESTAMP"
+last_entry = "  │   └── $MESSAGE"  
+
+# Extend time stamp
+time_stamp = "  ├── $TIMESTAMP"
+last_entry = "  │   └── $MESSAGE"  
