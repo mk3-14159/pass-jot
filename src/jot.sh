@@ -3,10 +3,17 @@
 # Copyright (C) 2023 MK Chong. All Rights Reserved.
 # This file is licensed under the MIT. Please see LICENSE for more information.
 
+# Setting up env variables
+umask "${JOT_UMASK:-077}"
+set -o pipefail
+
+# GPG variables 
+# Character variables 
+
 #
 # BEGIN platform definitions
 #
-
+JOURNAL_FILE="$HOME/.jot/jot.log"
 #
 # END platform definitions
 #
@@ -30,6 +37,15 @@ cmd_version() {
 
 	_EOF
 }
+
+cmd_commit() {
+    local MESSAGE="$1" 
+    local TIMESTAMP="$(date +"%Y-%m-%d %H:%M:%S")"
+    echo "[$TIMESTAMP]" >> "$JOURNAL_FILE"
+    echo "Logged "
+}
+
+
 
 
 #
