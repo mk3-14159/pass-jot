@@ -259,16 +259,16 @@ source "$(dirname "$0")/platform/$(uname | cut -d _ -f 1 | tr '[:upper:]' '[:low
 
 cmd_version() {
 	cat <<-_EOF
-	============================================
-	= pass: the standard unix password manager =
-	=                                          =
-	=                  v1.7.4                  =
-	=                                          =
-	=             Jason A. Donenfeld           =
-	=               Jason@zx2c4.com            =
-	=                                          =
-	=      http://www.passwordstore.org/       =
-	============================================
+	=======================================================
+	= pass-jot: A pass-powered timestamped thought logger =
+	=                                                     =
+	=                    v1.7.5                           =
+	=                                                     =
+	=                   MK Chong                          =
+	=                  mkchong.com                        =
+	=                                                     =
+	=       fork: http://www.passwordstore.org/           =
+	=======================================================
 	_EOF
 }
 
