@@ -30,63 +30,57 @@ fi
 echo "Entry added!"
 
 
-cmd_insert_jot() {
-	local opts force=0 noecho=1 
-	opts="$($GETOPT -o mef -l force,echo -n "$PROGRAM" -- "$@")"
-	local err=$?
-	eval set -- "$opts"
-	while true; do case $1 in
-		-e|--echo) noecho=0; shift ;;
-		-f|--force) force=1; shift ;;
-		--) shift; break ;;
-	esac done
+cmd_jot() {
+    [[ $# -ne 1 ]] && die "Usage: $PROGRAM $COMMAND pass-name"
 
-	[[ $err -ne 0 || ( $multiline -eq 1 && $noecho -eq 0 ) || $# -ne 1 ]] && die "Usage: $PROGRAM $COMMAND [--echo,-e | --multiline,-m] [--force,-f] pass-name"
 	local path="${1%/}"
-	local passfile="$PREFIX/$path.gpg"
 	check_sneaky_paths "$path"
-	set_git "$passfile"
-
 	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
 	set_gpg_recipients "$(dirname -- "$path")"
-    tmpdir #Defines $SECURE_TMPDIR
+	local passfile="$PREFIX/$path.gpg"
+	set_git "$passfile"
+
+	tmpdir #Defines $SECURE_TMPDIR
 	local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXXX")-${path//\//-}.txt"
 
-    # Don't need this as logs are overriden all the time 
-	[[ $force -eq 0 && -e $passfile ]] && yesno "An entry already exists for $path. Overwrite it?"
-
-    local current_time=$(date +"%A %d-%m-%Y %H:%M:%S")
-    local action="Add"
+	local action="Add"
 	if [[ -f $passfile ]]; then
 		$GPG -d -o "$tmp_file" "${GPG_OPTS[@]}" "$passfile" || exit 1
 		action="Edit"
 	fi
 
+    ### BEGIN - Make all json edits in $tmp_file ### 
     # Check if file is valid JSON (if it exists and is non-empty)
+    local time=$(date +"%A %d-%m-%Y %H:%M:%S")
     if [ -f "$tmp_file" ] && [ -s "$tmp_file" ]; then
         jq . "$tmp_file" >/dev/null 2>&1
         if [ $? -ne 0 ]; then
-            echo "Error: The file already has contents, but it's not valid JSON."
+            echo "Error: The entry already has contents, but it's not valid JSON."
             exit 1
         fi
     fi
 
-    # prompt user for message 
+    # Prompt for user message
     read -p "Enter your message: " message
 
-    # Write JSON to tmp_file
     if [ -f "$tmp_file" ] && [ -s "$tmp_file" ]; then
         # Append to existing non-empty file
-        jq --arg time "$current_time" --arg msg "$message" '. + {($time): $msg}' "$FILE" > "${FILE}.tmp" && mv "${FILE}.tmp" "$FILE"
+        # Rewrite this line 
+        jq --arg time "$time" --arg msg "$message" '. + {($time): $msg}' "$tmp_file" > "${tmp_file}.tmp" && mv "${tmp_file}.tmp" "$tmp_file"
     else
         # Create new file or overwrite an empty file with the entry
-        echo "{ \"$current_time\": \"$message\" }" > "$FILE"
+        echo "{ \"$current_time\": \"$message\" }" > "$tmp_file"
     fi
-    echo "Entry added!"
+    echo "[+] $time entry added!"
 
-	[[ -f $tmp_file ]] || die "New password not saved."
+    ### END - Make all json edits in $tmp_file ###  
 
-
-
+    [[ -f $tmp_file ]] || die "New message entry not saved."
+	$GPG -d -o - "${GPG_OPTS[@]}" "$passfile" 2>/dev/null | diff - "$tmp_file" &>/dev/null && die "Log unchanged."
+	while ! $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" "$tmp_file"; do
+		yesno "GPG encryption failed. Would you like to try again?"
+	done    
 	git_add_file "$passfile" "$action log message for $path"
 }
+
+
