@@ -509,6 +509,59 @@ cmd_edit() {
 	git_add_file "$passfile" "$action password for $path using ${EDITOR:-vi}."
 }
 
+cmd_jot() {
+    [[ $# -ne 1 ]] && die "Usage: $PROGRAM $COMMAND pass-name"
+
+	local path="${1%/}"
+	check_sneaky_paths "$path"
+	mkdir -p -v "$PREFIX/$(dirname -- "$path")"
+	set_gpg_recipients "$(dirname -- "$path")"
+	local passfile="$PREFIX/$path.gpg"
+	set_git "$passfile"
+
+	tmpdir #Defines $SECURE_TMPDIR
+	local tmp_file="$(mktemp -u "$SECURE_TMPDIR/XXXXXX")-${path//\//-}.txt"
+
+	local action="Add"
+	if [[ -f $passfile ]]; then
+		$GPG -d -o "$tmp_file" "${GPG_OPTS[@]}" "$passfile" || exit 1
+		action="Edit"
+	fi
+
+    ### BEGIN - Make all json edits in $tmp_file ### 
+    # Check if file is valid JSON (if it exists and is non-empty)
+    local current_time=$(date +"%A %d-%m-%Y %H:%M:%S")
+    if [ -f "$tmp_file" ] && [ -s "$tmp_file" ]; then
+        jq . "$tmp_file" >/dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo "Error: The entry already has contents, but it's not valid JSON."
+            exit 1
+        fi
+    fi
+
+    # Prompt for user message
+    read -p $'\033[34mEnter message:\033[0m ' message
+
+    if [ -f "$tmp_file" ] && [ -s "$tmp_file" ]; then
+        # Append to existing non-empty file
+        # Rewrite this line 
+        jq --arg time "$current_time" --arg msg "$message" '. + {($time): $msg}' "$tmp_file" > "${tmp_file}.tmp" && mv "${tmp_file}.tmp" "$tmp_file"
+    else
+        # Create new file or overwrite an empty file with the entry
+        echo "{ \"$current_time\": \"$message\" }" > "$tmp_file"
+    fi
+	printf "\033[35m[+] $current_time entry added!\033[0m\n"
+
+    ### END - Make all json edits in $tmp_file ###  
+
+    [[ -f $tmp_file ]] || die "New message entry not saved."
+	$GPG -d -o - "${GPG_OPTS[@]}" "$passfile" 2>/dev/null | diff - "$tmp_file" &>/dev/null && die "Log unchanged."
+	while ! $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" "$tmp_file"; do
+		yesno "GPG encryption failed. Would you like to try again?"
+	done
+	git_add_file "$passfile" "$action log message for $path"
+}
+
 cmd_generate() {
 	local opts qrcode=0 clip=0 force=0 characters="$CHARACTER_SET" inplace=0 pass
 	opts="$($GETOPT -o nqcif -l no-symbols,qrcode,clip,in-place,force -n "$PROGRAM" -- "$@")"
@@ -710,6 +763,7 @@ case "$1" in
 	find|search) shift;		cmd_find "$@" ;;
 	grep) shift;			cmd_grep "$@" ;;
 	insert|add) shift;		cmd_insert "$@" ;;
+	jot|log) shift;		cmd_jot "$@" ;;
 	edit) shift;			cmd_edit "$@" ;;
 	generate) shift;		cmd_generate "$@" ;;
 	delete|rm|remove) shift;	cmd_delete "$@" ;;
