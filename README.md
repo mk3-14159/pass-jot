@@ -7,3 +7,11 @@ jot is a streamlined command-line tool designed for those who seek a minimalisti
 1. Swift Logging: With a single command, jot down your thoughts without breaking your workflow.
 2. Automatic Timestamps: Each entry is automatically prefixed with the current date and time, creating a chronological record of your thoughts.
 3. Review Anytime: Easily revisit your thought logs, reflecting on past insights and ideas.
+
+
+### Steps 
+
+To generate a gpg key 
+```bash
+gpg --gen-key
+```
