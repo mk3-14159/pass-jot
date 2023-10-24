@@ -88,3 +88,6 @@ last_entry = "  │   └── $MESSAGE"
 # Extend time stamp
 time_stamp = "  ├── $TIMESTAMP"
 last_entry = "  │   └── $MESSAGE"  
+
+
+
