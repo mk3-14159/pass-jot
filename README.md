@@ -11,7 +11,13 @@ jot is a streamlined command-line tool designed for those who seek a minimalisti
 
 ### Steps 
 
-To generate a gpg key 
+1. To generate a gpg key 
 ```bash
 gpg --gen-key
 ```
+
+2. initialize a new pass store 
+```bash
+pass init <pub key>
+```
+

@@ -540,17 +540,17 @@ cmd_jot() {
     fi
 
     # Prompt for user message
-    read -p "Enter your message: " message
+    read -p $'\033[34mEnter message:\033[0m ' message
 
     if [ -f "$tmp_file" ] && [ -s "$tmp_file" ]; then
         # Append to existing non-empty file
         # Rewrite this line 
-        jq --arg time "$current_time" --arg msg "$message" '. + {($current_time): $msg}' "$tmp_file" > "${tmp_file}.tmp" && mv "${tmp_file}.tmp" "$tmp_file"
+        jq --arg time "$current_time" --arg msg "$message" '. + {($time): $msg}' "$tmp_file" > "${tmp_file}.tmp" && mv "${tmp_file}.tmp" "$tmp_file"
     else
         # Create new file or overwrite an empty file with the entry
         echo "{ \"$current_time\": \"$message\" }" > "$tmp_file"
     fi
-    echo "[+] $current_time entry added!"
+	printf "\033[35m[+] $current_time entry added!\033[0m\n"
 
     ### END - Make all json edits in $tmp_file ###  
 
