@@ -1,5 +1,5 @@
 # jot
-A timestamped thought logger 
+A secure timestamped thought logger 
 
 jot is a streamlined command-line tool designed for those who seek a minimalistic yet effective way to capture fleeting thoughts. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps. It's the digital equivalent of scribbling on a notepad, ensuring that your moments of inspiration are never lost to the sands of time.
 
