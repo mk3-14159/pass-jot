@@ -6,7 +6,7 @@ A secure timestamped thought logger
 
 ![The Social Network](https://media.tenor.com/2cKVhhxhPLsAAAAC/the-social-network-watching-movie.gif)
 
-Pass-jot is a minimalistic and secure way to capture fleeting thoughts. All entries into pass jot are PGP encrypted and secured. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps.
+Pass-jot is a minimalistic and secure way to capture fleeting thoughts. All entries into pass jot are GPG encrypted and secured. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps.
 </div>
 
 ## Installation
