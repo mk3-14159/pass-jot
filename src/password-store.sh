@@ -553,8 +553,9 @@ cmd_jot() {
         # Create new file or overwrite an empty file with the entry
         echo "{ \"$current_time\": \"$message\" }" > "$tmp_file"
     fi
-	printf "\033[35m[+] $current_time entry added!\033[0m\n"
-
+	local count=$(jq length "$tmp_file")
+	printf " \033[0;32m[✔]\033[0m \033[35m $current_time entry added!\033[0m \033[38;5;208m(Total Entries: $count)\033[0m\n"
+	
     ### END - Make all json edits in $tmp_file ###  
 
     [[ -f $tmp_file ]] || die "New message entry not saved."
