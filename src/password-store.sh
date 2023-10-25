@@ -483,7 +483,7 @@ cmd_insert() {
 		echo "$password" | $GPG -e "${GPG_RECIPIENT_ARGS[@]}" -o "$passfile" "${GPG_OPTS[@]}" || die "Password encryption aborted."
 	fi
 	git_add_file "$passfile" "Add given password for $path to store."
-	pass git push
+	pass git push --quiet
 }
 
 cmd_edit() {
@@ -511,7 +511,7 @@ cmd_edit() {
 		yesno "GPG encryption failed. Would you like to try again?"
 	done
 	git_add_file "$passfile" "$action password for $path using ${EDITOR:-vi}."
-	pass git push
+	pass git push --quiet
 }
 
 cmd_jot() {
@@ -565,7 +565,7 @@ cmd_jot() {
 		yesno "GPG encryption failed. Would you like to try again?"
 	done
 	git_add_file "$passfile" "$action log message for $path"
-	pass git push
+	pass git push --quiet
 }
 
 cmd_generate() {
