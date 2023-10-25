@@ -3,8 +3,7 @@ A secure timestamped thought logger
 
 Pass-jot is a minimalistic yet effective way to capture fleeting thoughts. All entries into pass jot are PGP encrypted and secured. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps.
 
-### Installation
-The installation and initialization of pass-jot is the same as password-manager, you can read the [passwordstore documentation](https://www.passwordstore.org/) for the initialization instructions.
+## Installation
 
 1. Download the project 
 ```bash
@@ -16,7 +15,7 @@ git clone https://github.com/mk3-14159/pass-jot.git
 make install 
 ```
 
-### Initialize pass-jot
+## Initialize pass-jot
 
 1. To generate a gpg key 
 ```bash
@@ -29,7 +28,7 @@ By default, pass-jot will be initialized in ```$HOME/.password-store```
 pass init <pub key>
 ```
 
-### Usage 
+## Usage 
 pass-jot retains all of it's functionality from password-manager, you can read the [passwordstore documentation](https://www.passwordstore.org/) for the usage of pass features.
 The additional functionality this fork provides is the timestamped log feature, pass-jot help log and securely store your notes and deep thoughts in a pgp encrypted json format.
 All logs are treated as a pass secret, which means that all pass commands to update and delete pass jots are valid. 
