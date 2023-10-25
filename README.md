@@ -1,15 +1,21 @@
-# jot
+# pass-jot
 A secure timestamped thought logger 
 
-jot is a streamlined command-line tool designed for those who seek a minimalistic yet effective way to capture fleeting thoughts. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps. It's the digital equivalent of scribbling on a notepad, ensuring that your moments of inspiration are never lost to the sands of time.
+pass-jot is a streamlined command-line tool designed for those who seek a minimalistic yet effective way to capture fleeting thoughts. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps. 
 
-### Features
-1. Swift Logging: With a single command, jot down your thoughts without breaking your workflow.
-2. Automatic Timestamps: Each entry is automatically prefixed with the current date and time, creating a chronological record of your thoughts.
-3. Review Anytime: Easily revisit your thought logs, reflecting on past insights and ideas.
+### Install pass-jot
 
+1. Download the project 
+```bash
+git clone https://github.com/mk3-14159/pass-jot.git
+```
 
-### Steps 
+2. In the project repository
+```bash
+make install 
+```
+
+### Initialize pass-jot
 
 1. To generate a gpg key 
 ```bash
@@ -17,7 +23,27 @@ gpg --gen-key
 ```
 
 2. initialize a new pass store 
+By default, pass-jot will be initialized in ```$HOME/.password-store```
 ```bash
 pass init <pub key>
 ```
 
+### Usage 
+pass-jot retains all of it's functionality from password-manager, you can read the [passwordstore documentation](https://www.passwordstore.org/) for the usage of pass features.
+The additional functionality this fork provides is the timestamped log feature, pass-jot help log and securely store your notes and deep thoughts in a pgp encrypted json format.
+All logs are treated as a pass secret, which means that all pass commands to update and delete pass jots are valid. 
+
+1. To start a new log or append to an existing log in pass-jot
+```bash
+pass jot <log_path/log>
+```
+
+2. To search for log entries using grep
+```bash
+pass grep <keyword>
+```
+
+3. To edit a an existing log
+```bash
+pass edit <log_path/log>
+```
