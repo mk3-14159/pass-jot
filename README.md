@@ -9,13 +9,6 @@ A secure timestamped thought logger
 Pass-jot is a minimalistic and secure way to capture fleeting thoughts. All entries into pass jot are PGP encrypted and secured. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps.
 </div>
 
-## Dependencies
-To run this project, you will need to have the following software and libraries installed on your system:
-
-1. [git](https://git-scm.com/downloads) - a distributed version control system
-2. [jq](https://github.com/jqlang/jq) - a lightweight and flexible command-line JSON processor
-3. [tree](https://www.linuxfromscratch.org/blfs/view/svn/general/tree.html) - a command-line utility that generates a hierarchical directory tree view
-
 ## Installation
 
 1. Download the project 
@@ -27,6 +20,13 @@ git clone https://github.com/mk3-14159/pass-jot.git
 ```bash
 make install 
 ```
+
+## Dependencies
+To run this project, you will need to have the following software and libraries installed on your system:
+
+1. [git](https://git-scm.com/downloads) - a distributed version control system
+2. [jq](https://github.com/jqlang/jq) - a lightweight and flexible command-line JSON processor
+3. [tree](https://www.linuxfromscratch.org/blfs/view/svn/general/tree.html) - a command-line utility that generates a hierarchical directory tree view
 
 ## Initialize pass-jot
 
