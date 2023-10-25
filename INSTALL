@@ -31,3 +31,6 @@ To run all tests, run 'make test'.
 
 To debug an individual test, run it directly with '-v', e.g.:
     $ tests/t0001-sanity-checks.sh -v
+    $ tests/t0010-generate-tests.sh -v
+    $ tests/t0020-show-tests.sh -v
+
