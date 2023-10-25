@@ -3,7 +3,7 @@ A secure timestamped thought logger
 
 pass-jot is a streamlined command-line tool designed for those who seek a minimalistic yet effective way to capture fleeting thoughts. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps. 
 
-### Install pass-jot
+### Installation
 
 1. Download the project 
 ```bash
