@@ -293,6 +293,9 @@ cmd_usage() {
 	        Insert new password. Optionally, echo the password back to the console
 	        during entry. Or, optionally, the entry may be multiline. Prompt before
 	        overwriting existing password unless forced.
+	    $PROGRAM [jot/log] log-name
+			Key in your entry, your entry will be appended into any existing logs. 
+			If the entry does not exist, it will be created.
 	    $PROGRAM edit pass-name
 	        Insert a new password or edit an existing password using ${EDITOR:-vi}.
 	    $PROGRAM generate [--no-symbols,-n] [--clip,-c] [--in-place,-i | --force,-f] pass-name [pass-length]
