@@ -8,7 +8,7 @@ A secure timestamped thought logger
 
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
 
-Pass-jot is a minimalistic and secure way to capture fleeting thoughts. All entries into pass jot are GPG encrypted and secured. Inspired by the way Mark Zuckerberg used live journal in the movie "The Social Network," jot allows users to swiftly log their ideas, appending them with accurate timestamps.
+Pass-jot is a minimalistic and secure way to capture fleeting thoughts. All entries into pass jot are GPG encrypted and secured.
 </div>
 
 ## Installation
